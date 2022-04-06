@@ -5,7 +5,6 @@ import reactor.core.publisher.Mono;
 
 import java.time.Instant;
 
-
 public interface FlightRepository {
 
     Mono<Flight> findByFlightNumberAndDepartureDate(int flightNumber, Instant date);

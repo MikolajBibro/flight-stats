@@ -11,7 +11,6 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Document("flight2t")
 public class Flight {
 
   int flightId;
