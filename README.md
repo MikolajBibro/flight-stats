@@ -41,7 +41,7 @@ Example request:
 
 http://localhost:8080/airport-details/airportCode/ANC/departureDate/2002-07-28.18:47:00
 
-departureDate = UTC time in format yyyy.MM.dd-HH:mm:ss 
+departureDate = UTC time in format yyyy-MM-dd.HH:mm:ss 
 
 airportCode {
   SEA,
