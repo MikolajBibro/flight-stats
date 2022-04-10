@@ -9,7 +9,7 @@ docker compose up
 ```
 
 # API
-##1st functionality
+1st functionality
 
 a. Cargo Weight for requested Flight
 
