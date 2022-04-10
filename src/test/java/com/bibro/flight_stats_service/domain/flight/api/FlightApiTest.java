@@ -74,8 +74,7 @@ public class FlightApiTest {
 
     @Test
     void shouldReturnCorrectFlightDetails() {
-        saveAll(
-                flight(1, MongoAirportCode.ANC, MongoAirportCode.GDN, LocalDateTime.of(2012, 12, 12, 12, 12)),
+        saveAll(flight(1, MongoAirportCode.ANC, MongoAirportCode.GDN, LocalDateTime.of(2012, 12, 12, 12, 12)),
                 flight(2, MongoAirportCode.GDN, MongoAirportCode.ANC, LocalDateTime.of(2012, 12, 12, 12, 12)),
                 flight(2, MongoAirportCode.GDN, MongoAirportCode.ANC, LocalDateTime.of(2012, 12, 12, 12, 12)));
 
