@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 
 @Repository
@@ -24,7 +25,7 @@ public class FlightMongoRepository implements FlightRepository {
     }
 
     @Override
-    public Mono<Flight> findByFlightNumberAndDepartureDate(int flightNumber, ZonedDateTime dateTime) {
+    public Mono<Flight> findByFlightNumberAndDepartureDate(int flightNumber, LocalDateTime dateTime) {
         Query query = new Query();
         query.addCriteria(Criteria.where("flightNumber").is(flightNumber));
         query.addCriteria(Criteria.where("departureDate").is(dateTime));
@@ -33,7 +34,7 @@ public class FlightMongoRepository implements FlightRepository {
     }
 
     @Override
-    public Flux<Flight> findByDepartingAirportAndDepartureDate(AirportCode airportCode, ZonedDateTime dateTime) {
+    public Flux<Flight> findByDepartingAirportAndDepartureDate(AirportCode airportCode, LocalDateTime dateTime) {
         MongoAirportCode code = MongoAirportCode.findByDomain(airportCode);
 
         Query query = new Query();
@@ -44,7 +45,7 @@ public class FlightMongoRepository implements FlightRepository {
     }
 
     @Override
-    public Flux<Flight> findByArrivalAirportAndDepartureDate(AirportCode airportCode, ZonedDateTime dateTime) {
+    public Flux<Flight> findByArrivalAirportAndDepartureDate(AirportCode airportCode, LocalDateTime dateTime) {
         MongoAirportCode code = MongoAirportCode.findByDomain(airportCode);
 
         Query query = new Query();

@@ -7,8 +7,6 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.util.Collection;
 import java.util.List;
 
@@ -24,17 +22,14 @@ public class FlightService {
     }
 
     public Mono<FlightWeightDetails> getFlightWeightDetails(int flightNumber, LocalDateTime departureDate) {
-        ZonedDateTime date = ZonedDateTime.of(departureDate, ZoneId.of("UTC"));
-
         return flightRepository
-                .findByFlightNumberAndDepartureDate(flightNumber, date)
+                .findByFlightNumberAndDepartureDate(flightNumber, departureDate)
                 .map(Flight::getWeightDetails);
     }
 
     public Mono<AirportDetails> getAirportDetails(AirportCode code, LocalDateTime departureDate) {
-        ZonedDateTime date = ZonedDateTime.of(departureDate, ZoneId.of("UTC"));
-        Flux<Flight> departures = flightRepository.findByDepartingAirportAndDepartureDate(code, date);
-        Flux<Flight> arrivals = flightRepository.findByArrivalAirportAndDepartureDate(code, date);
+        Flux<Flight> departures = flightRepository.findByDepartingAirportAndDepartureDate(code, departureDate);
+        Flux<Flight> arrivals = flightRepository.findByArrivalAirportAndDepartureDate(code, departureDate);
 
         return Mono.zip(departures.collectList(), arrivals.collectList(), this::createFlightDetails);
     }

@@ -5,9 +5,6 @@ import com.bibro.flight_stats_service.domain.flight.Freight;
 import com.bibro.flight_stats_service.domain.flight.Weight;
 
 import java.math.BigDecimal;
-import java.time.Clock;
-import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -18,7 +15,7 @@ class Adapters {
         return new Flight(dto.getFlightNumber(),
                 dto.departureAirport.toDomain(),
                 dto.arrivalAirport.toDomain(),
-                toDomain(dto.departureDate),
+                dto.departureDate,
                 toDomain(dto.cargos, dto.baggage));
     }
 
@@ -37,9 +34,5 @@ class Adapters {
         return new Freight(new Weight(BigDecimal.valueOf(mongoFreight.weight), mongoFreight.getUnit().toDomain()),
                 mongoFreight.getPieces(),
                 Freight.Type.BAGGAGE);
-    }
-
-    private static LocalDateTime toDomain(ZonedDateTime date) {
-        return date.withZoneSameInstant(Clock.systemDefaultZone().getZone()).toLocalDateTime();
     }
 }
