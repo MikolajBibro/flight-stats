@@ -3,6 +3,8 @@
 # How to run
 
 ```
+use Java 11
+
 ./gradlew clean build
 docker-compose build
 docker compose up
