@@ -4,12 +4,12 @@ import lombok.Value;
 
 @Value
 public class Freight {
-
     Weight weight;
     int pieces;
     Type freightType;
 
     public enum Type {
-        CARGO, BAGGAGE
+        CARGO,
+        BAGGAGE
     }
 }

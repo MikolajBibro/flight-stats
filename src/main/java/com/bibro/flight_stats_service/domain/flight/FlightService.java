@@ -1,44 +1,58 @@
 package com.bibro.flight_stats_service.domain.flight;
 
-import com.bibro.flight_stats_service.infrastructure.mongo.flight.FlightMongoRepository;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.time.Instant;
-import java.util.function.Predicate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.util.Collection;
+import java.util.List;
 
+@Log4j2
 @Service
 public class FlightService {
 
-    FlightMongoRepository flightMongoRepository;
+    private final FlightRepository flightRepository;
 
     @Autowired
-    public FlightService(FlightMongoRepository flightMongoRepository) {
-        this.flightMongoRepository = flightMongoRepository;
+    public FlightService(FlightRepository flightRepository) {
+        this.flightRepository = flightRepository;
     }
 
-    public Mono<Double> calculateCargoWeight(int flightNumber, Instant date) {
-        Predicate<Freight> freightTypePredicate = f -> f.getFreightType().equals(Freight.Type.CARGO);
-        return calculateWeight(flightNumber, date, freightTypePredicate);
+    public Mono<FlightWeightDetails> getFlightWeightDetails(int flightNumber, LocalDateTime departureDate) {
+        ZonedDateTime date = ZonedDateTime.of(departureDate, ZoneId.systemDefault());
+
+        return flightRepository
+                .findByFlightNumberAndDepartureDate(flightNumber, date)
+                .map(Flight::getWeightDetails);
     }
 
-    public Mono<Double> calculateBaggageWeight(int flightNumber, Instant date) {
-        Predicate<Freight> freightTypePredicate = f -> f.getFreightType().equals(Freight.Type.BAGGAGE);
-        return calculateWeight(flightNumber, date, freightTypePredicate);
+    public Mono<AirportDetails> getAirportDetails(AirportCode code, LocalDateTime departureDate) {
+        ZonedDateTime date = ZonedDateTime.of(departureDate, ZoneId.systemDefault());
+        Flux<Flight> departures = flightRepository.findByDepartingAirportAndDepartureDate(code, date);
+        Flux<Flight> arrivals = flightRepository.findByArrivalAirportAndDepartureDate(code, date);
+
+        return Mono.zip(departures.collectList(), arrivals.collectList(), this::createFlightDetails);
     }
 
-    public Mono<Double> calculateTotalWeight(int flightNumber, Instant date) {
-        return calculateWeight(flightNumber, date, f -> true);
+    private AirportDetails createFlightDetails(List<Flight> departures, List<Flight> arrivals) {
+        return new AirportDetails(
+                departures.size(),
+                getBaggagePieces(departures),
+                arrivals.size(),
+                getBaggagePieces(arrivals));
     }
 
-    private Mono<Double> calculateWeight(int flightNumber, Instant date, Predicate<Freight> freightTypePredicate) {
-        return flightMongoRepository.findByFlightNumberAndDepartureDate(flightNumber, date)
-                .map(Flight::getFreights)
-                .flatMapMany(Flux::fromIterable)
-                .filter(freightTypePredicate)
-                .map(Freight::getWeight)
-                .reduce(0.0, (result, w) -> result + w.toKg());
+    private int getBaggagePieces(List<Flight> flights) {
+        return (int)
+                flights.stream()
+                        .map(Flight::getFreights)
+                        .flatMap(Collection::stream)
+                        .filter(f -> f.getFreightType().equals(Freight.Type.BAGGAGE))
+                        .count();
     }
 }

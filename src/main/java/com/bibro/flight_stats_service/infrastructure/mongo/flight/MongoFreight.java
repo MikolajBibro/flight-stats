@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class FreightDto {
+public class MongoFreight {
 
     double weight;
     UnitDto unit;
@@ -22,10 +22,6 @@ public class FreightDto {
 
         UnitDto(Weight.Unit domainValue) {
             this.domainValue = domainValue;
-        }
-
-        static UnitDto findByDomain(Weight.Unit unit) {
-            return null;
         }
 
         Weight.Unit toDomain() {

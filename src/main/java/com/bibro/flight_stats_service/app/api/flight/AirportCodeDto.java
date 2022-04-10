@@ -1,12 +1,8 @@
-package com.bibro.flight_stats_service.infrastructure.mongo.flight;
+package com.bibro.flight_stats_service.app.api.flight;
 
 import com.bibro.flight_stats_service.domain.flight.AirportCode;
 
-import java.util.Arrays;
-import java.util.NoSuchElementException;
-
 public enum AirportCodeDto {
-
     SEA(AirportCode.SEA),
     YYZ(AirportCode.YYZ),
     YYT(AirportCode.YYT),
@@ -22,13 +18,6 @@ public enum AirportCodeDto {
 
     AirportCodeDto(AirportCode domainValue) {
         this.domainValue = domainValue;
-    }
-
-    static AirportCodeDto findByDomain(AirportCode airportCode) {
-        return Arrays.stream(values())
-                .filter(dto -> dto.toDomain().equals(airportCode))
-                .findFirst()
-                .orElseThrow(NoSuchElementException::new);
     }
 
     AirportCode toDomain() {

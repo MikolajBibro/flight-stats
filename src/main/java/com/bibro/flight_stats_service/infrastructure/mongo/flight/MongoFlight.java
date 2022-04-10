@@ -6,20 +6,19 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Document("flights")
-public class FlightDto {
+public class MongoFlight {
 
-    int id;
-    int flightId;
     int flightNumber;
-    AirportCodeDto departureAirport;
-    AirportCodeDto arrivalAirport;
-    long departureDate;
-    List<FreightDto> cargos;
-    List<FreightDto> baggage;
+    MongoAirportCode departureAirport;
+    MongoAirportCode arrivalAirport;
+    ZonedDateTime departureDate;
+    List<MongoFreight> cargos;
+    List<MongoFreight> baggage;
 }
