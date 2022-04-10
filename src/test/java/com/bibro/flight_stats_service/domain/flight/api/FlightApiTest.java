@@ -79,7 +79,7 @@ public class FlightApiTest {
                 .uri("airport-details/airportCode/{airportCode}/departureDate/{departureDate}", AirportCodeDto.ANC, "2012-12-12.12:12:00")
                 .exchange()
                 .expectBody((FlightDetailsDto.class))
-                .isEqualTo(new FlightDetailsDto(1, 2, 2, 4));
+                .isEqualTo(new FlightDetailsDto(1, 16, 2, 32));
     }
 
     MongoFlight flight(

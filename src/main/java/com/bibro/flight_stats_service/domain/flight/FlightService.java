@@ -43,11 +43,11 @@ public class FlightService {
     }
 
     private int getBaggagePieces(List<Flight> flights) {
-        return (int)
-                flights.stream()
-                        .map(Flight::getFreights)
-                        .flatMap(Collection::stream)
-                        .filter(f -> f.getFreightType().equals(Freight.Type.BAGGAGE))
-                        .count();
+        return flights.stream()
+                .map(Flight::getFreights)
+                .flatMap(Collection::stream)
+                .filter(f -> f.getFreightType().equals(Freight.Type.BAGGAGE))
+                .map(Freight::getPieces)
+                .reduce(0, Integer::sum);
     }
 }
