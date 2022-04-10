@@ -1,6 +1,5 @@
 package com.bibro.flight_stats_service.domain.flight;
 
-import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
@@ -10,7 +9,6 @@ import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
-@Log4j2
 @Service
 public class FlightService {
 
