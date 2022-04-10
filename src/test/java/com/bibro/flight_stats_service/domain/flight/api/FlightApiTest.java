@@ -36,16 +36,14 @@ public class FlightApiTest {
     @Container
     public static MongoDBContainer container =
             new MongoDBContainer(DockerImageName.parse("mongo:4.4.3"));
-
     @Autowired
     private WebTestClient webTestClient;
     @Autowired
     private ReactiveMongoTemplate template;
 
     @DynamicPropertySource
-    static void registerPgProperties(DynamicPropertyRegistry registry) {
-        registry.add("spring.data.mongodb.host", container::getHost);
-        registry.add("spring.data.mongodb.port", container::getPortBindings);
+    static void registerMongoProperties(DynamicPropertyRegistry registry) {
+        registry.add("spring.data.mongodb.uri", container::getReplicaSetUrl);
     }
 
     @BeforeEach
