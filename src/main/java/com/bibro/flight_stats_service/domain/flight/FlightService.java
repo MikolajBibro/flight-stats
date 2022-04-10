@@ -24,7 +24,7 @@ public class FlightService {
     }
 
     public Mono<FlightWeightDetails> getFlightWeightDetails(int flightNumber, LocalDateTime departureDate) {
-        ZonedDateTime date = ZonedDateTime.of(departureDate, ZoneId.systemDefault());
+        ZonedDateTime date = ZonedDateTime.of(departureDate, ZoneId.of("UTC"));
 
         return flightRepository
                 .findByFlightNumberAndDepartureDate(flightNumber, date)
@@ -32,7 +32,7 @@ public class FlightService {
     }
 
     public Mono<AirportDetails> getAirportDetails(AirportCode code, LocalDateTime departureDate) {
-        ZonedDateTime date = ZonedDateTime.of(departureDate, ZoneId.systemDefault());
+        ZonedDateTime date = ZonedDateTime.of(departureDate, ZoneId.of("UTC"));
         Flux<Flight> departures = flightRepository.findByDepartingAirportAndDepartureDate(code, date);
         Flux<Flight> arrivals = flightRepository.findByArrivalAirportAndDepartureDate(code, date);
 

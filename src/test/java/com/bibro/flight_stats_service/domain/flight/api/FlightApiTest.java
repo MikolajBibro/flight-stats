@@ -92,7 +92,7 @@ public class FlightApiTest {
         MongoFreight f1 = new MongoFreight(5.0, MongoFreight.UnitDto.kg, 10);
         MongoFreight f2 = new MongoFreight(12.0, MongoFreight.UnitDto.kg, 5);
         MongoFreight f3 = new MongoFreight(12.0, MongoFreight.UnitDto.kg, 11);
-        ZonedDateTime departureDate = ZonedDateTime.of(date, ZoneId.systemDefault());
+        ZonedDateTime departureDate = ZonedDateTime.of(date, ZoneId.of("UTC"));
         return new MongoFlight(
                 flightNumber,
                 departure,

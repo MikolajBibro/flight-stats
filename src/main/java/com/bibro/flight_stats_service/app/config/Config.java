@@ -28,7 +28,7 @@ public class Config {
     public static class ZonedDateTimeReadConverter implements Converter<Date, ZonedDateTime> {
         @Override
         public ZonedDateTime convert(Date date) {
-            return date.toInstant().atZone(ZoneId.systemDefault());
+            return date.toInstant().atZone(ZoneId.of("UTC"));
         }
     }
 
