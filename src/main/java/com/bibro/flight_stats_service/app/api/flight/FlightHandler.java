@@ -24,22 +24,22 @@ public class FlightHandler {
         this.flightService = flightService;
     }
 
-    Mono<ServerResponse> getFlightWeightDetails(ServerRequest request) {
+    Mono<ServerResponse> getFlightWeightStats(ServerRequest request) {
         int flightNumber = Integer.parseInt(request.pathVariable("flightNumber"));
         LocalDateTime departureDate = toLocalDateTime(request.pathVariable("departureDate"));
 
         return flightService
-                .getFlightWeightDetails(flightNumber, departureDate)
+                .getFlightWeightStats(flightNumber, departureDate)
                 .flatMap(r -> ok().bodyValue(Adapters.toDto(r)))
                 .switchIfEmpty(notFound().build());
     }
 
-    Mono<ServerResponse> getAirportDetails(ServerRequest request) {
+    Mono<ServerResponse> getAirportStats(ServerRequest request) {
         AirportCode airportCode = AirportCodeDto.valueOf(request.pathVariable("airportCode")).toDomain();
         LocalDateTime departureDate = toLocalDateTime(request.pathVariable("departureDate"));
 
         return flightService
-                .getAirportDetails(airportCode, departureDate)
+                .getAirportStats(airportCode, departureDate)
                 .flatMap(r -> ok().bodyValue(Adapters.toDto(r)))
                 .switchIfEmpty(notFound().build());
     }

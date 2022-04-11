@@ -21,7 +21,7 @@ c. Total Weight for requested Flight
 ```
 Example request:
 
-http://localhost:8080/weight-details/flightNumber/4133/departureDate/2002-07-28.18:47:00
+http://localhost:8080/weight-stats/flightNumber/4133/departureDate/2002-07-28.18:47:00
 departureDate = UTC time in format yyyy-MM-dd.HH:mm:ss 
 
 ```
@@ -39,7 +39,7 @@ d. Total number (pieces) of baggage departing from this airport.
 ```
 Example request:
 
-http://localhost:8080/airport-details/airportCode/ANC/departureDate/2002-07-28.18:47:00
+http://localhost:8080/airport-stats/airportCode/ANC/departureDate/2002-07-28.18:47:00
 
 departureDate = UTC time in format yyyy-MM-dd.HH:mm:ss 
 

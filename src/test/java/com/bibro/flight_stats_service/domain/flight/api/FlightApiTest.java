@@ -1,8 +1,8 @@
 package com.bibro.flight_stats_service.domain.flight.api;
 
 import com.bibro.flight_stats_service.app.api.flight.AirportCodeDto;
-import com.bibro.flight_stats_service.app.api.flight.FlightDetailsDto;
-import com.bibro.flight_stats_service.app.api.flight.FlightWeightDetailsDto;
+import com.bibro.flight_stats_service.app.api.flight.AirportStatsDto;
+import com.bibro.flight_stats_service.app.api.flight.FlightWeightStatsDto;
 import com.bibro.flight_stats_service.infrastructure.mongo.flight.MongoAirportCode;
 import com.bibro.flight_stats_service.infrastructure.mongo.flight.MongoFlight;
 import com.bibro.flight_stats_service.infrastructure.mongo.flight.MongoFreight;
@@ -60,11 +60,11 @@ public class FlightApiTest {
 
         webTestClient
                 .get()
-                .uri("weight-details/flightNumber/{flightNumber}/departureDate/{departureDate}", 1, "2012-12-12.12:12:00")
+                .uri("weight-stats/flightNumber/{flightNumber}/departureDate/{departureDate}", 1, "2012-12-12.12:12:00")
                 .exchange()
-                .expectBody((FlightWeightDetailsDto.class))
+                .expectBody((FlightWeightStatsDto.class))
                 .isEqualTo(
-                        new FlightWeightDetailsDto(
+                        new FlightWeightStatsDto(
                                 BigDecimal.valueOf(5.0), BigDecimal.valueOf(24.0), BigDecimal.valueOf(29.0)));
     }
 
@@ -76,10 +76,10 @@ public class FlightApiTest {
 
         webTestClient
                 .get()
-                .uri("airport-details/airportCode/{airportCode}/departureDate/{departureDate}", AirportCodeDto.ANC, "2012-12-12.12:12:00")
+                .uri("airport-stats/airportCode/{airportCode}/departureDate/{departureDate}", AirportCodeDto.ANC, "2012-12-12.12:12:00")
                 .exchange()
-                .expectBody((FlightDetailsDto.class))
-                .isEqualTo(new FlightDetailsDto(1, 16, 2, 32));
+                .expectBody((AirportStatsDto.class))
+                .isEqualTo(new AirportStatsDto(1, 16, 2, 32));
     }
 
     MongoFlight flight(

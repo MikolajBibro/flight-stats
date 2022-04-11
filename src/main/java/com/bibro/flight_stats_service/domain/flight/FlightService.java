@@ -19,21 +19,21 @@ public class FlightService {
         this.flightRepository = flightRepository;
     }
 
-    public Mono<FlightWeightDetails> getFlightWeightDetails(int flightNumber, LocalDateTime departureDate) {
+    public Mono<FlightWeightStats> getFlightWeightStats(int flightNumber, LocalDateTime departureDate) {
         return flightRepository
                 .findByFlightNumberAndDepartureDate(flightNumber, departureDate)
                 .map(Flight::getWeightDetails);
     }
 
-    public Mono<AirportDetails> getAirportDetails(AirportCode code, LocalDateTime departureDate) {
+    public Mono<AirportStats> getAirportStats(AirportCode code, LocalDateTime departureDate) {
         Flux<Flight> departures = flightRepository.findByDepartingAirportAndDepartureDate(code, departureDate);
         Flux<Flight> arrivals = flightRepository.findByArrivalAirportAndDepartureDate(code, departureDate);
 
-        return Mono.zip(departures.collectList(), arrivals.collectList(), this::createFlightDetails);
+        return Mono.zip(departures.collectList(), arrivals.collectList(), this::createAirportStats);
     }
 
-    private AirportDetails createFlightDetails(List<Flight> departures, List<Flight> arrivals) {
-        return new AirportDetails(
+    private AirportStats createAirportStats(List<Flight> departures, List<Flight> arrivals) {
+        return new AirportStats(
                 departures.size(),
                 getBaggagePieces(departures),
                 arrivals.size(),

@@ -1,9 +1,9 @@
-package com.bibro.flight_stats_service.domain.flight;
+package com.bibro.flight_stats_service.app.api.flight;
 
 import lombok.Value;
 
 @Value
-public class AirportDetails {
+public class AirportStatsDto {
 
     int numberOfDepartingFlights;
     int totalDepartingBaggagePieces;

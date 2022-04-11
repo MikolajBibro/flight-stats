@@ -16,10 +16,10 @@ public class WebConfig {
     @Bean
     public RouterFunction<ServerResponse> routes(FlightHandler flightHandler) {
         return route(
-                GET("weight-details/flightNumber/{flightNumber}/departureDate/{departureDate}"),
-                flightHandler::getFlightWeightDetails)
+                GET("weight-stats/flightNumber/{flightNumber}/departureDate/{departureDate}"),
+                flightHandler::getFlightWeightStats)
                 .andRoute(
-                        GET("airport-details/airportCode/{airportCode}/departureDate/{departureDate}"),
-                        flightHandler::getAirportDetails);
+                        GET("airport-stats/airportCode/{airportCode}/departureDate/{departureDate}"),
+                        flightHandler::getAirportStats);
     }
 }

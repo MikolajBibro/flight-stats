@@ -20,8 +20,8 @@ public class Flight {
     LocalDateTime departureDate;
     List<Freight> freights;
 
-    public FlightWeightDetails getWeightDetails() {
-        return new FlightWeightDetails(getCargoWeight(), getBaggageWeight());
+    public FlightWeightStats getWeightDetails() {
+        return new FlightWeightStats(getCargoWeight(), getBaggageWeight());
     }
 
     private BigDecimal getCargoWeight() {

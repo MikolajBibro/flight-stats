@@ -5,13 +5,13 @@ import lombok.Value;
 import java.math.BigDecimal;
 
 @Value
-public class FlightWeightDetails {
+public class FlightWeightStats {
 
     BigDecimal cargoWeight;
     BigDecimal baggageWeight;
     BigDecimal totalWeight;
 
-    public FlightWeightDetails(BigDecimal cargoWeight, BigDecimal baggageWeight) {
+    public FlightWeightStats(BigDecimal cargoWeight, BigDecimal baggageWeight) {
         this.cargoWeight = cargoWeight;
         this.baggageWeight = baggageWeight;
         this.totalWeight = cargoWeight.add(baggageWeight);
